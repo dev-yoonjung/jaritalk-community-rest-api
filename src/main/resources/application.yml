@@ -6,3 +6,11 @@ server:
 spring:
   profiles:
     active: dev
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 10
+        show_sql: true
