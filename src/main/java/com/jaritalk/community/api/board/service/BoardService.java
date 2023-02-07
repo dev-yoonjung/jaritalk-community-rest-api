@@ -5,6 +5,7 @@ import com.jaritalk.community.api.board.dto.RegisterPostDTO;
 import com.jaritalk.community.api.board.dto.UpdatePostDTO;
 import com.jaritalk.community.api.board.validator.PostValidator;
 import com.jaritalk.community.domain.post.entity.Post;
+import com.jaritalk.community.domain.post.entity.PostLike;
 import com.jaritalk.community.domain.post.service.PostLikeService;
 import com.jaritalk.community.domain.post.service.PostService;
 import com.jaritalk.community.domain.user.entity.User;
@@ -49,11 +50,11 @@ public class BoardService {
                 .map(p -> {
                     Long postId = p.getId();
                     Long likeCount = postLikeService.countByPostId(postId);
-                    boolean likeYN = Optional.ofNullable(accountId)
-                            .map(i -> postLikeService.exist(i, postId))
+                    boolean isLike = Optional.ofNullable(accountId)
+                            .map(i -> postLikeService.exist(i, postId).isPresent())
                             .orElse(false);
 
-                    return PostDetailDTO.of(p, likeCount, likeYN);
+                    return PostDetailDTO.of(p, likeCount, isLike);
                 })
                 .collect(Collectors.toList());
     }
@@ -84,6 +85,19 @@ public class BoardService {
         }
 
         postService.deleteById(id);
+    }
+
+    @Transactional
+    public void likePost(Long id, String accountId) {
+        Optional<PostLike> postLike = postLikeService.exist(accountId, id);
+        if (postLike.isPresent()) {
+            postLikeService.deleteById(postLike.get().getId());
+            return;
+        }
+
+        User user = userService.findByAccountId(accountId);
+        Post post = postService.findById(id);
+        postLikeService.save(PostLike.of(user, post));
     }
 
     private String getAccountId(String authorization) {
