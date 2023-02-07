@@ -67,11 +67,23 @@ public class BoardService {
         Post post = postService.findById(id);
         User user = userService.findByAccountId(accountId);
 
-        if (!postValidator.validateAccessUpdatePost(post, user)) {
+        if (!postValidator.validateAccessPost(post, user)) {
             throw new ForbiddenException(ErrorCode.FORBIDDEN_UPDATE_POST);
         }
 
         post.update(dto.toEntity());
+    }
+
+    @Transactional
+    public void deletePost(Long id, String accountId) {
+        Post post = postService.findById(id);
+        User user = userService.findByAccountId(accountId);
+
+        if (!postValidator.validateAccessPost(post, user)) {
+            throw new ForbiddenException(ErrorCode.FORBIDDEN_DELETE_POST);
+        }
+
+        postService.deleteById(id);
     }
 
     private String getAccountId(String authorization) {

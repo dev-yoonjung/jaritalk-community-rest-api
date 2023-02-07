@@ -14,7 +14,7 @@ public class PostValidator {
         return Objects.equals(postId, dto.getId());
     }
 
-    public boolean validateAccessUpdatePost(Post post, User user) {
+    public boolean validateAccessPost(Post post, User user) {
         return Objects.equals(post.getUser().getId(), user.getId());
     }
 

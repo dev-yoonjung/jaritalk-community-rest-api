@@ -74,4 +74,20 @@ public class BoardController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * 커뮤니티 글 삭제 API
+     *
+     * <pre>
+     *     1. 임대인, 임차인, 공인중개사는 커뮤니티글 삭제 가능
+     *     2. 외부 사용자는 글 삭제 불가
+     * </pre>
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(
+            @PathVariable Long id,
+            @RequestAttribute("accountId") String accountId) {
+        boardService.deletePost(id, accountId);
+
+        return ResponseEntity.ok().build();
+    }
 }
