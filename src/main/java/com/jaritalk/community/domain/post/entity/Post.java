@@ -37,4 +37,9 @@ public class Post extends BaseEntity {
                 .build();
     }
 
+    public void update(Post post) {
+        this.title = post.getTitle();
+        this.content = post.getContent();
+    }
+
 }

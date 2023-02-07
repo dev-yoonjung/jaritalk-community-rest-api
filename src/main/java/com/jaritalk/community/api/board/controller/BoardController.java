@@ -2,9 +2,9 @@ package com.jaritalk.community.api.board.controller;
 
 import com.jaritalk.community.api.board.dto.PostDetailDTO;
 import com.jaritalk.community.api.board.dto.RegisterPostDTO;
+import com.jaritalk.community.api.board.dto.UpdatePostDTO;
 import com.jaritalk.community.api.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/board")
@@ -32,8 +31,6 @@ public class BoardController {
     public ResponseEntity<?> registerPost(
             @RequestBody @Valid RegisterPostDTO dto,
             @RequestAttribute("accountId") String accountId) {
-        log.info("post: {}", dto);
-        log.info("account id: {}", accountId);
         boardService.registerPost(dto, accountId);
 
         return ResponseEntity.ok().build();
@@ -57,6 +54,24 @@ public class BoardController {
         List<PostDetailDTO> postList = boardService.getPostList(authorization);
 
         return ResponseEntity.ok(postList);
+    }
+
+    /**
+     * 커뮤니티 글 수정 API
+     *
+     * <pre>
+     *     1. 임대인, 임차인, 공인중개사는 커뮤니티글 수정 가능
+     *     2. 외부 사용자는 글 수정 불가
+     * </pre>
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePost(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdatePostDTO dto,
+            @RequestAttribute("accountId") String accountId) {
+        boardService.updatePost(id, dto, accountId);
+
+        return ResponseEntity.ok().build();
     }
 
 }

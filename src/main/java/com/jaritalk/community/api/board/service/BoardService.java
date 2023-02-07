@@ -2,6 +2,8 @@ package com.jaritalk.community.api.board.service;
 
 import com.jaritalk.community.api.board.dto.PostDetailDTO;
 import com.jaritalk.community.api.board.dto.RegisterPostDTO;
+import com.jaritalk.community.api.board.dto.UpdatePostDTO;
+import com.jaritalk.community.api.board.validator.PostValidator;
 import com.jaritalk.community.domain.post.entity.Post;
 import com.jaritalk.community.domain.post.service.PostLikeService;
 import com.jaritalk.community.domain.post.service.PostService;
@@ -9,6 +11,8 @@ import com.jaritalk.community.domain.user.entity.User;
 import com.jaritalk.community.domain.user.service.UserService;
 import com.jaritalk.community.global.error.exception.AuthenticationException;
 import com.jaritalk.community.global.error.exception.ErrorCode;
+import com.jaritalk.community.global.error.exception.ForbiddenException;
+import com.jaritalk.community.global.error.exception.NotValidParameterException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +32,8 @@ public class BoardService {
     private final PostService postService;
 
     private final PostLikeService postLikeService;
+
+    private final PostValidator postValidator;
 
     @Transactional
     public void registerPost(RegisterPostDTO dto, String accountId) {
@@ -52,6 +58,22 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public void updatePost(Long id, UpdatePostDTO dto, String accountId) {
+        if (!postValidator.validatePostId(id, dto)) {
+            throw new NotValidParameterException(ErrorCode.NOT_VALID_POST_ID);
+        }
+
+        Post post = postService.findById(id);
+        User user = userService.findByAccountId(accountId);
+
+        if (!postValidator.validateAccessUpdatePost(post, user)) {
+            throw new ForbiddenException(ErrorCode.FORBIDDEN_UPDATE_POST);
+        }
+
+        post.update(dto.toEntity());
+    }
+
     private String getAccountId(String authorization) {
         if (!StringUtils.hasText(authorization)) {
             return null;
@@ -64,6 +86,4 @@ public class BoardService {
 
         return authorizations[1];
     }
-
-
 }
