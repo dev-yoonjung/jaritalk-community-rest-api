@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "8898ab2d-8bfb-4365-ab3d-f9e324839d7e",
+		"name": "jaritalk-community",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "insert-post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Lessor lessorA",
+						"type": "default"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"커뮤니티 글 작성 TEST01\",\n    \"content\": \"커뮤니티 글 작성 테스트입니다.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/board",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"board"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-post",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "REALTOR realtorA",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/board",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"board"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-post",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Lessor lessorA",
+						"type": "default"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"title\": \"커뮤니티 글 업데이트 TEST02\",\n    \"content\": \"커뮤니티 글 업데이트 테스트입니다.\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/board/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"board",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-post",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Lessor lessorA",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/board/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"board",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "like-post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "REALTOR realtorA",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/board/1/like",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"board",
+						"1",
+						"like"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
