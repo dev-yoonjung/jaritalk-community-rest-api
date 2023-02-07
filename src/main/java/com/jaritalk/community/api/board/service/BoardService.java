@@ -43,11 +43,11 @@ public class BoardService {
                 .map(p -> {
                     Long postId = p.getId();
                     Long likeCount = postLikeService.countByPostId(postId);
-                    boolean checkedLike = Optional.ofNullable(accountId)
+                    boolean likeYN = Optional.ofNullable(accountId)
                             .map(i -> postLikeService.exist(i, postId))
                             .orElse(false);
 
-                    return PostDetailDTO.of(p, likeCount, checkedLike);
+                    return PostDetailDTO.of(p, likeCount, likeYN);
                 })
                 .collect(Collectors.toList());
     }
