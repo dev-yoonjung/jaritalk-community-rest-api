@@ -36,4 +36,8 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.POST_NOT_EXISTS));
     }
 
+    public void deleteById(Long id) {
+        postRepository.deleteById(id);
+    }
+
 }
