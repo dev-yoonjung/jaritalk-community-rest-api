@@ -26,7 +26,7 @@ public enum AccountType {
      */
     public static boolean isAccountType(String type) {
         List<AccountType> collect = Arrays.stream(AccountType.values())
-                .filter(t -> t.name().equals(type))
+                .filter(t -> t.name().equalsIgnoreCase(type))
                 .collect(Collectors.toList());
 
         return collect.size() > 0;

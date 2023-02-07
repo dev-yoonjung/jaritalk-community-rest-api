@@ -2,10 +2,14 @@ package com.jaritalk.community.entity.user;
 
 import com.jaritalk.community.constant.AccountType;
 import com.jaritalk.community.entity.base.BaseEntity;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@ToString
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {
@@ -15,14 +19,14 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 8)
+    @Column(nullable = false, length = 8, unique = true)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 7)
     private AccountType accountType;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String accountId;
 
     @Column(nullable = false)
