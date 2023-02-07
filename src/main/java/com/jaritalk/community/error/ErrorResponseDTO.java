@@ -8,14 +8,14 @@ import java.util.List;
 
 @Getter
 @Builder
-public class ErrorResponseEntity {
+public class ErrorResponseDTO {
 
     private int status;
 
     private List<String> messages;
 
-    public static ErrorResponseEntity of(HttpStatus status, List<String> messages) {
-        return ErrorResponseEntity.builder()
+    public static ErrorResponseDTO of(HttpStatus status, List<String> messages) {
+        return ErrorResponseDTO.builder()
                 .status(status.value())
                 .messages(messages)
                 .build();

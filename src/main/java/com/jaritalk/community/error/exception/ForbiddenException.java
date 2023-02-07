@@ -5,5 +5,5 @@ public class ForbiddenException extends BusinessException {
     public ForbiddenException(ErrorCode code) {
         super(code);
     }
-    
+
 }
