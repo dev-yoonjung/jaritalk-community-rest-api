@@ -23,11 +23,11 @@ public class PostDetailDTO {
 
     private Long likeCount;
 
-    private boolean likeYN;
+    private boolean isLike;
 
     private LocalDateTime createTime;
 
-    public static PostDetailDTO of(Post post, Long likeCount, boolean likeYN) {
+    public static PostDetailDTO of(Post post, Long likeCount, boolean isLike) {
         User writer = post.getUser();
         String nickname = writer.getNickname();
         String accountType = writer.getAccountType()
@@ -39,7 +39,7 @@ public class PostDetailDTO {
                 .content(post.getContent())
                 .writer(String.format("%s(%s)", nickname, accountType))
                 .likeCount(likeCount)
-                .likeYN(likeYN)
+                .isLike(isLike)
                 .createTime(post.getCreateTime())
                 .build();
     }

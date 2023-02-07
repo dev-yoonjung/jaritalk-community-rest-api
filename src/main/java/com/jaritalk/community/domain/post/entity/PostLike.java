@@ -2,13 +2,15 @@ package com.jaritalk.community.domain.post.entity;
 
 import com.jaritalk.community.domain.base.BaseEntity;
 import com.jaritalk.community.domain.user.entity.User;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Builder
 @Entity
 @Table(name = "post_like")
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostLike extends BaseEntity {
 
@@ -24,5 +26,12 @@ public class PostLike extends BaseEntity {
     @ManyToOne(targetEntity = Post.class)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public static PostLike of(User user, Post post) {
+        return PostLike.builder()
+                .user(user)
+                .post(post)
+                .build();
+    }
 
 }

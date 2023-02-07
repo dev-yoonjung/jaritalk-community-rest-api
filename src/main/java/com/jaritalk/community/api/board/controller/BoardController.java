@@ -90,4 +90,21 @@ public class BoardController {
 
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * 커뮤니티 글 좋아요 API
+     *
+     * <pre>
+     *     1. 좋아요는 한 계정이 한 글에 한 번만 가능
+     *     2. 좋아요한 글에 한번 더 좋아요를 누르면 취소
+     * </pre>
+     */
+    @PostMapping("/{id}/like")
+    public ResponseEntity<?> likePost(
+            @PathVariable Long id,
+            @RequestAttribute("accountId") String accountId) {
+        boardService.likePost(id, accountId);
+
+        return ResponseEntity.ok().build();
+    }
 }
