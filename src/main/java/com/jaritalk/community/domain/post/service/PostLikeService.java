@@ -15,6 +15,7 @@ public class PostLikeService {
 
     private final PostLikeRepository postLikeRepository;
 
+    @Transactional
     public PostLike save(PostLike postLike) {
         return postLikeRepository.save(postLike);
     }
@@ -27,6 +28,7 @@ public class PostLikeService {
         return postLikeRepository.exist(accountId, postId);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         postLikeRepository.deleteById(id);
     }

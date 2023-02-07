@@ -2,7 +2,6 @@ package com.jaritalk.community.domain.post.service;
 
 import com.jaritalk.community.domain.post.entity.Post;
 import com.jaritalk.community.domain.post.repository.PostRepository;
-import com.jaritalk.community.domain.user.service.UserService;
 import com.jaritalk.community.global.error.exception.EntityNotFoundException;
 import com.jaritalk.community.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +14,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PostService {
-
-    private final UserService userService;
-
-    private final PostLikeService postLikeService;
 
     private final PostRepository postRepository;
 
@@ -36,6 +31,7 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.POST_NOT_EXISTS));
     }
 
+    @Transactional
     public void deleteById(Long id) {
         postRepository.deleteById(id);
     }
