@@ -3,6 +3,8 @@ package com.jaritalk.community.domain.post.service;
 import com.jaritalk.community.domain.post.entity.Post;
 import com.jaritalk.community.domain.post.repository.PostRepository;
 import com.jaritalk.community.domain.user.service.UserService;
+import com.jaritalk.community.global.error.exception.EntityNotFoundException;
+import com.jaritalk.community.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,11 @@ public class PostService {
 
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    public Post findById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.POST_NOT_EXISTS));
     }
 
 }
