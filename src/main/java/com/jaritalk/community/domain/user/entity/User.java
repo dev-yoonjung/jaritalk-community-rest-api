@@ -32,5 +32,6 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Boolean quit;
 
-    private LocalDateTime quitedAt;
+    @Column
+    private LocalDateTime quitDate;
 }
